@@ -1,0 +1,100 @@
+; "One More Thing (minor)" - 125 bpm, 4/4, 47 bars (~90 s)
+; Same dialect as keynote.mml. Written in A minor, transposed to B minor on output,
+; the relative minor of the major version's D.
+; Form: intro 4 | verse 8 (i VI III VII / i VI III V) | build 8 | hook 8 (VI VII i VI iv V i i)
+;       verse 8 + bells | hook 8 | tag 3
+
+#tempo 125
+#transpose 2
+
+$aAm = o4 l16 [c e a >c<]4
+$aF  = o4 l16 [c f a >c<]4
+$aC  = o4 l16 [c e g >c<]4
+$aG  = o4 l16 [<b> d g b]4
+$aDm = o4 l16 [d f a >d<]4
+$aE  = o4 l16 [<b> e g+ b]4
+
+$bAm = o2 l8 [a >a<]4
+$bF  = o2 l8 [f >f<]4
+$bC  = o2 l8 [c >c<]4
+$bG  = o2 l8 [g >g<]4
+$bDm = o2 l8 [d >d<]4
+$bE  = o2 l8 [e >e<]4
+
+$pAm = o3 {a >c e}1
+$pF  = o3 {a >c f}1
+$pC  = o4 {c e g}1
+$pG  = o3 {b >d g}1
+$pDm = o3 {a >d f}1
+$pE  = o3 {b >e g+}1
+
+$LA = l8 o5 r e a >c< a4 e d   o5 c4. <a> c4 r c   o5 c e g >c< b4 g e   o5 d4. c <b4> d g   o5 r e a >c< a4 >e4   o6 c4. o5 a o6 c4 o5 a f   o5 g4 >c< g e4 g4   o5 b4. a g+2
+$LB = l8 o5 d d d c d4 f4   o5 c c c <a> c4 f4   o5 e e e d e4 a4   o5 g+2 a b g+4   o5 d d d c d4 a4   o5 a a a g a4 >c4<   o5 b4 b4 >c4 d4   o6 e2 r2
+$LC = l8 o5 a >c< a >c d c< a g   o5 g4 b >d4< b g d   o5 e a >c e d c< a e   o5 f4. e f4 a4   o5 a >d< a >d f d< a f   o5 g+4 b >e4< b >d4   o6 c4. <b a4 b >c   o5 a2. r4
+
+@track lead ch=1 prog=11 v=100
+l1 [r]4
+$LA
+$LB
+@80 $LC
+@11 $LA
+@80 $LC
+l8 o5 a >c< a >c d c< a g   o5 g+4 b >e4< b >d4   o6 c1
+
+@track counter ch=2 prog=9 v=80
+l1 [r]28
+o6 e2 c2 c1 e2 g2 d1 e2 c2 <a1> e2 g2 <b1>
+l1 [r]11
+
+@track arp ch=3 prog=4 v=68
+$aAm $aF $aC $aG
+$aAm $aF $aC $aG $aAm $aF $aC $aE
+$aDm $aF $aAm $aE $aDm $aF $aE $aE
+$aF $aG $aAm $aF $aDm $aE $aAm $aAm
+$aAm $aF $aC $aG $aAm $aF $aC $aE
+$aF $aG $aAm $aF $aDm $aE $aAm $aAm
+$aF $aE o4 {c e a >c<}1
+
+@track pad ch=4 prog=89 v=48
+$pAm $pF $pC $pG
+$pAm $pF $pC $pG $pAm $pF $pC $pE
+$pDm $pF $pAm $pE $pDm $pF $pE $pE
+$pF $pG $pAm $pF $pDm $pE $pAm $pAm
+$pAm $pF $pC $pG $pAm $pF $pC $pE
+$pF $pG $pAm $pF $pDm $pE $pAm $pAm
+$pF $pE $pAm
+
+@track bass ch=5 prog=38 v=96
+l1 [r]4
+$bAm $bF $bC $bG $bAm $bF $bC $bE
+$bDm $bF $bAm $bE $bDm $bF $bE $bE
+$bF $bG $bAm $bF $bDm $bE $bAm $bAm
+$bAm $bF $bC $bG $bAm $bF $bC $bE
+$bF $bG $bAm $bF $bDm $bE $bAm $bAm
+$bF $bE o2 a1
+
+$K = l4 [n36]4
+$S = l4 r n39 r n39
+$H = l8 [r n42]4
+
+@track kick ch=10 v=110
+l1 [r]4
+[$K]42
+l4 n36 r r r
+
+@track clap ch=10 v=95
+l1 [r]4
+[$S]15
+l16 [n38]16
+[$S]26
+l1 r
+
+@track hat ch=10 v=62
+l1 [r]4
+[$H]42
+l1 r
+
+@track crash ch=10 v=90
+l1 [r]4
+[n49 [r]7]5
+n49 r n49

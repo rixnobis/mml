@@ -1,0 +1,167 @@
+; "No Coming Back" - 60 bpm, 4/4, 43 bars (~2:52), D minor
+; Same dialect as keynote.mml.
+; I   realization  1-8    lone piano, strings creep in at 5        i VI iv V x2
+; II  the abyss    9-16   cello takes the theme, bell tolls, choir at 13
+; III death march 17-24   muffled snare, bass drum, tuba, trombones   i i iv i i VI V V
+; IV  collapse    25-32   i bII i bII / VI iv V V - the Neapolitan Eb is the floor giving way
+;                         palm-muted guitar + kick locked on a 3+3+2 sixteenth pattern underneath
+; V   impact         33
+; VI  lament      34-43   piano almost alone over a fading D-A drone. The drone leaves
+;                         before the last note, and the last note is the 9th. It never gets home.
+
+#tempo 60
+#transpose 0
+
+; piano left hand, one bar of rising broken chord
+$LDm = l8 [o2 d a o3 d f]2
+$LBb = l8 [o1 b- o2 f b- o3 d]2
+$LGm = l8 [o2 g o3 d g b-]2
+$LA  = l8 [o2 a o3 e a o4 c+]2
+
+; string / choir chords
+$sDm = o3 {d a >d f}1
+$sBb = o3 {d f b- >d}1
+$sGm = o3 {d g b- >d}1
+$sA  = o3 {c+ e a >c+}1
+$sEb = o3 {e- g b- >e-}1
+
+$cDm = o4 {d f a}1
+$cBb = o4 {d f b-}1
+$cGm = o4 {d g b-}1
+$cA  = o4 {c+ e a}1
+$cEb = o4 {e- g b-}1
+
+; march: tuba on 1 and 3, bass drum on 1 and 3, snare roll-then-dotted figure
+$tDm = l4 o2 d r o1 a r
+$tGm = l4 o1 g r o2 d r
+$tBb = l4 o1 b- r o2 f r
+$tA  = l4 o1 a r o2 e r
+$BD  = l4 n35 r n35 r
+$SN  = l16 n38 n38 n38 n38 l8. n38 l16 n38 l4 n38 r
+
+; collapse guitar: palm-muted power chords, 8 sixteenths accented 3+3+2, twice per bar.
+; Each hit is a dotted 32nd plus a 64th rest, which is the palm mute. Double-tracked:
+; distortion on ch13, overdrive on ch14.
+$pD  = o2 {d a}32. r64
+$pEb = o2 {e- b-}32. r64
+$pBb = o2 {b- >f}32. r64
+$pG  = o2 {g >d}32. r64
+$pA  = o2 {a >e}32. r64
+$gDm = [v124 $pD v92 $pD $pD v124 $pD v92 $pD $pD v124 $pD v92 $pD]2
+$gEb = [v124 $pEb v92 $pEb $pEb v124 $pEb v92 $pEb $pEb v124 $pEb v92 $pEb]2
+$gBb = [v124 $pBb v92 $pBb $pBb v124 $pBb v92 $pBb $pBb v124 $pBb v92 $pBb]2
+$gGm = [v124 $pG v92 $pG $pG v124 $pG v92 $pG $pG v124 $pG v92 $pG]2
+$gA  = [v124 $pA v92 $pA $pA v124 $pA v92 $pA $pA v124 $pA v92 $pA]2
+; the bass drum on the same 3+3+2 accents
+$KC  = l16 [n36 r r n36 r r n36 r]2
+
+@track lead ch=1 prog=0 v=72
+o5 a2 g4 f4   f2. d4   d2 c4 <b-4>   o4 a1
+o5 a2 g4 f4   f2 g4 a4   b-2 a4 g4   c+1
+l1 [r]24
+v112 o4 {d a >d f a}1
+v58 o5 a2. g4   f2 e4 d4   e2. f8 e8   o4 a1
+v54 o5 r4 f4 a4 >d4   c2. <b-4   v48 a2 g4 f4   v42 e1
+l1 [r]2
+
+@track pianoL ch=6 prog=0 v=56
+$LDm $LBb $LGm $LA $LDm $LBb $LGm $LA
+v48 $LDm $LBb $LGm $LA $LDm $LBb $LGm $LA
+l1 [r]16
+v112 o1 {d a >d}1
+v40 o2 d1 o1 b-1 g1 a1 o2 d1 o1 b-1 v34 g1
+l1 [r]3
+
+@track arp ch=2 prog=48 v=38
+l1 [r]4
+$sDm $sBb $sGm $sA
+v62 $sDm $sBb $sGm $sA $sDm $sBb $sGm $sA
+v46 $sDm $sDm $sGm $sDm $sDm $sBb $sA $sA
+v96 $sDm $sEb $sDm $sEb $sBb $sGm $sA $sA
+v112 $sDm
+v36 o3 {d a}1 v32 {d a}1 v28 {d a}1 v24 {d a}1 v20 {d a}1 v16 {d a}1 v12 {d a}1
+l1 [r]3
+
+@track counter ch=3 prog=42 v=88
+l1 [r]8
+o4 a2 g4 f4   f2. d4   d2 c4 <b-4>   o3 a1
+o4 a2 >c4< a4   b-2 a4 g4   g2 f4 e4   o3 a1
+l1 [r]27
+
+@track trombones ch=12 prog=57 v=100
+l1 [r]16
+o3 a4 a8. a16 a4 a4   o4 c4 <b-8. b-16 a8. a16 a4   o3 b-4 b-8. b-16 b-4 b-4   o4 d4 c8. c16 o3 a4 a4
+o3 a4 a8. a16 a4 o4 d4   o4 f4 e8. d16 d4 d4   o4 e4 c+8. o3 a16 a4 o4 c+4   o4 e2. r4
+l1 [r]19
+
+@track tuba ch=11 prog=58 v=96
+l1 [r]16
+$tDm $tDm $tGm $tDm $tDm $tBb $tA $tA
+l1 [r]19
+
+@track violins ch=4 prog=48 v=115
+l1 [r]24
+o5 d2 a2   b-2 g2   a2 >d2<   o6 e-2 d2
+o6 d2. c4   o5 b-2 a4 g4   a1   e2 c+2
+l1 [r]11
+
+@track choir ch=5 prog=52 v=60
+l1 [r]12
+$cDm $cBb $cGm $cA
+l1 [r]8
+v100 $cDm $cEb $cDm $cEb $cBb $cGm $cA $cA
+v112 $cDm
+l1 [r]10
+
+@track contrabass ch=9 prog=43 v=80
+l1 [r]8
+o2 d1 o1 b-1 g1 a1 o2 d1 o1 b-1 g1 a1
+v72 o2 d1 d1 o1 g1 o2 d1 d1 o1 b-1 a1 a1
+v100 o2 d1 e-1 d1 e-1 o1 b-1 g1 a1 a1
+v112 o2 d1
+l1 [r]10
+
+@track timpani ch=7 prog=47 v=80
+l1 [r]16
+[l4 o2 d r o1 a r]8
+l16 v70 [o2 d]16 v76 [o2 e-]16 v84 [o2 d]16 v92 [o2 e-]16
+v98 [o1 b-]16 v104 [o1 g]16 v112 [o1 a]16 v122 [o1 a]16
+l4 v127 o2 d r r r
+l1 [r]10
+
+@track bells ch=8 prog=14 v=70
+l1 [r]8
+[o4 d r]4
+o4 d [r]3 o4 d [r]3
+v90 [o4 d]8
+v110 o4 d
+l1 [r]10
+
+@track bassdrum ch=10 v=90
+l1 [r]16
+[$BD]8
+v100 [$KC]8
+l1 [r]11
+
+@track guitar ch=13 prog=30 v=90
+l1 [r]24
+$gDm $gEb $gDm $gEb $gBb $gGm $gA $gA
+v100 o2 {d a >d}2 r2
+l1 [r]10
+
+@track guitar2 ch=14 prog=29 v=90
+l1 [r]24
+$gDm $gEb $gDm $gEb $gBb $gGm $gA $gA
+v100 o2 {d a >d}2 r2
+l1 [r]10
+
+@track snare ch=10 v=72
+l1 [r]16
+[$SN]7
+l16 v60 n38 n38 n38 n38 v72 n38 n38 n38 n38 v86 n38 n38 n38 n38 v104 n38 n38 n38 n38
+l1 [r]19
+
+@track gong ch=10 v=110
+l1 [r]24
+n49 [r]7
+n49 [r]10

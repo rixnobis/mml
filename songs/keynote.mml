@@ -1,0 +1,112 @@
+; "One More Thing" - 125 bpm, 4/4, 47 bars (~90 s)
+; Dialect (pinned, one meaning per token):
+;   o4       octave (o4 c = middle C)        > <   octave up / down
+;   l8       default length (1=whole, 8=eighth, dots allowed: l4.)
+;   c d+ e-  notes, + or # sharp, - flat, optional length: c4 e8.
+;   r        rest            nNN   raw MIDI note (drums)
+;   {c e g}2 chord, octave moves inside braces are local
+;   [ ... ]N repeat N times  v100  velocity   @N  program change
+;   $NAME = ...   macro, expanded textually wherever $NAME appears
+; Written in C, transposed to D on output.
+
+#tempo 125
+#transpose 2
+
+; ---- chord arps: four chord tones, sixteenths, one bar
+$aC  = o4 l16 [c e g >c<]4
+$aG  = o4 l16 [<b> d g b]4
+$aAm = o4 l16 [c e a >c<]4
+$aF  = o4 l16 [c f a >c<]4
+$aEm = o4 l16 [<b> e g b]4
+
+; ---- pumping octave bass, one bar
+$bC  = o2 l8 [c >c<]4
+$bG  = o2 l8 [g >g<]4
+$bAm = o2 l8 [a >a<]4
+$bF  = o2 l8 [f >f<]4
+$bEm = o2 l8 [e >e<]4
+
+; ---- pad, one bar
+$pC  = o4 {c e g}1
+$pG  = o3 {b >d g}1
+$pAm = o3 {a >c e}1
+$pF  = o3 {a >c f}1
+$pEm = o3 {b >e g}1
+
+; ---- form: intro 4 | verse 8 (I V vi IV x2) | build 8 | hook 8 (IV V iii vi IV V I I)
+;            verse 8 + bells | hook 8 | tag 3
+
+; ---- lead lines
+$LA = l8 o5 r e g >c< g4 e d   o5 d4. o4 b o5 d4 r d   o5 c e a >c< b4 a g   o5 a4. g f4 e f   o5 r e g >c< g4 >c4   o5 b4. a g4 d g   o5 a4 >c< a e4 a4   o5 a4. g a2
+$LB = l8 o5 e e e d e4 c4   o5 c c c <a> c4 f4   o5 e e e d e4 g4   o5 g2 f e d4   o5 e e e d e4 a4   o5 a a a g a4 >c4<   o5 b4 b4 >c4 d4   o6 d2 r2
+$LC1 = l8 o5 a >c< a >c d c< a g   o5 g4 b >d4< b g d   o5 e g b >e d< b g e   o5 a4. g a4 >c4
+$LC2 = l8 o5 a >c< a >c d c< a g   o5 g4 b >d4< b >d4   o6 e4. d c4 d e   o6 c2. r4
+$LC = $LC1 $LC2
+
+@track lead ch=1 prog=11 v=100
+l1 [r]4
+$LA
+$LB
+@80 $LC
+@11 $LA
+@80 $LC
+l8 o5 a >c< a >c d c< a g   o5 g4 b >d4< b >d4   o6 c1
+
+@track counter ch=2 prog=9 v=80
+l1 [r]28
+o6 g2 e2 d1 e2 c2 c1 g2 e2 d1 c2 e2 f1
+l1 [r]11
+
+@track arp ch=3 prog=4 v=68
+$aC $aG $aAm $aF
+[$aC $aG $aAm $aF]2
+$aAm $aF $aC $aG $aAm $aF $aG $aG
+$aF $aG $aEm $aAm $aF $aG $aC $aC
+[$aC $aG $aAm $aF]2
+$aF $aG $aEm $aAm $aF $aG $aC $aC
+$aF $aG o4 {c e g >c<}1
+
+@track pad ch=4 prog=89 v=48
+$pC $pG $pAm $pF
+[$pC $pG $pAm $pF]2
+$pAm $pF $pC $pG $pAm $pF $pG $pG
+$pF $pG $pEm $pAm $pF $pG $pC $pC
+[$pC $pG $pAm $pF]2
+$pF $pG $pEm $pAm $pF $pG $pC $pC
+$pF $pG $pC
+
+@track bass ch=5 prog=38 v=96
+l1 [r]4
+[$bC $bG $bAm $bF]2
+$bAm $bF $bC $bG $bAm $bF $bG $bG
+$bF $bG $bEm $bAm $bF $bG $bC $bC
+[$bC $bG $bAm $bF]2
+$bF $bG $bEm $bAm $bF $bG $bC $bC
+$bF $bG o2 c1
+
+; ---- drums (channel 10): 36 kick, 39 clap, 38 snare, 42 closed hat, 49 crash
+$K = l4 [n36]4
+$S = l4 r n39 r n39
+$H = l8 [r n42]4
+
+@track kick ch=10 v=110
+l1 [r]4
+[$K]42
+l4 n36 r r r
+
+@track clap ch=10 v=95
+l1 [r]4
+[$S]15
+l16 [n38]16
+[$S]26
+l1 r
+
+@track hat ch=10 v=62
+l1 [r]4
+[$H]42
+l1 r
+
+@track crash ch=10 v=90
+l1 [r]4
+[n49 [r]7]5
+n49 r n49
